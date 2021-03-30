@@ -2,6 +2,7 @@ package ie.gmit.sw.ai;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import ie.gmit.sw.ai.Ghosts.FuzzyGhost;
 import ie.gmit.sw.ai.Ghosts.Ghosts;
 import javafx.concurrent.Task;
 
@@ -40,6 +41,7 @@ public class CharacterTask extends Task<Void>{
 	private char enemyID;
 	private int row;
 	private int col;
+	public static int ghostPosition;
 	/*
 	 * Configure each character with its own action. Use this functional interface
 	 * as a hook or template to connect to your fuzzy logic and neural network. The
@@ -47,13 +49,15 @@ public class CharacterTask extends Task<Void>{
 	 * a random adjacent cell.
 	 */
 	private Command cmd;
+	private static FuzzyGhost fg;
 	
-	public CharacterTask(GameModel model, char enemyID, int row, int col, Command cmd) {
+	public CharacterTask(GameModel model, char enemyID, int row, int col, FuzzyGhost fg) {
 		this.model = model;
 		this.enemyID = enemyID;
 		this.row = row;
 		this.col = col;
-		this.cmd = cmd;
+		CharacterTask.fg = fg;
+
 	}
 	
     @Override
@@ -77,7 +81,7 @@ public class CharacterTask extends Task<Void>{
             	}else {
             		temp_col += rand.nextBoolean() ? 1 : -1;
             	}
-            	
+				ghostPosition = temp_row + temp_col;
             	if (model.isValidMove(row, col, temp_row, temp_col, enemyID)) {
             		/*
             		 * This fires if the character can move to a cell, i.e. if it is not
@@ -89,13 +93,22 @@ public class CharacterTask extends Task<Void>{
             		model.set(row, col, '\u0020');
             		row = temp_row;
             		col = temp_col;
+
+					System.out.println(enemyID + " is moving too: " + ghostPosition);
+
             	}else {  
             		/*
             		 * This fires if a move is not valid, i.e. if someone or some thing 
             		 * is in the way. Use implementations of Command to control how the
             		 * computer controls this character. 
             		 */
-            		cmd.execute();
+					if(ghostPosition -1 == GameWindow.playerPosition  || ghostPosition + 1 == GameWindow.playerPosition )
+					{
+						System.out.println( enemyID + " is Engaging ");
+						fg.execute(Ghosts.getHealth(), Ghosts.getEnergy());
+
+					}
+
             	}
         	}
     	}

@@ -1,19 +1,25 @@
 package ie.gmit.sw.ai.Ghosts;
 
+import ie.gmit.sw.ai.CharacterTask;
 import ie.gmit.sw.ai.Command;
+import ie.gmit.sw.ai.GameWindow;
 import ie.gmit.sw.ai.Player.Player;
 
 import java.util.Random;
 
-public class Ghosts implements Command {
+public abstract class Ghosts implements Command {
     private static double health = 100;
     private static double energy = 100;
     private int upperbound = 101;
     private int int_random;
     protected char ghostType;
 
+    Player player = new Player();
+
     public Ghosts(char ghostType) {
+
         this.ghostType = ghostType;
+       // Ghosts.player = player;
     }
 
     public static double getHealth() {
@@ -32,7 +38,6 @@ public class Ghosts implements Command {
         Ghosts.energy = energy;
     }
 
-    Player p = new Player();
     public static int damageAmount;
 
     public static int getDamageAmount() {
@@ -45,18 +50,27 @@ public class Ghosts implements Command {
 
 
     public void Rejuvinate() {
+        System.out.println("Rejuvenating");
     }
 
 
     public void Run() {
+        System.out.println("Running away..");
     }
 
 
     public void Attack() {
-    }
+        if(this.energy > 0)
+        {
+            System.out.println("\n Attacking..");
+
+            player.setHealth(player.getHealth() - 10 );
+            setEnergy(getEnergy() - 25);
+            System.out.println("Player health: " + player.getHealth()
+                    + ", Spider health: " + this.health + ", Spider energy: " + this.energy);
+        }
 
 
-    public void Search() {
     }
 
 
@@ -66,23 +80,23 @@ public class Ghosts implements Command {
         int_random = rand.nextInt(upperbound);
         if (int_random <= 33) {
 
-            if (p.getHealth() <= 100) {
-                p.setHealth(50);
+            if (player.getHealth() <= 100) {
+                player.setHealth(health = 50);
                 System.out.println("You have generated an extra 50 health");
             }
 
         } else if (int_random > 33 && int_random <= 66) {
 
 
-            if (p.getSword() == 0) {
-                p.setSword(1);
+            if (player.getSword() == 0) {
+                player.setSword(1);
                 System.out.println("You have picked up a sword");
             }
 
         } else if (int_random > 66) {
 
-            if (p.getGun() == 0) {
-                p.setGun(1);
+            if (player.getGun() == 0) {
+                player.setGun(1);
                 System.out.println("You have picked up a gun");
             } else {
                 System.out.println("You have picked up have a gun");
@@ -101,12 +115,11 @@ public class Ghosts implements Command {
         }
     }
 
+
     @Override
-    public void execute() {
+    public double execute(double health, double energy) {
+
+        return 0;
 
     }
-
-    ;
-
-
 }

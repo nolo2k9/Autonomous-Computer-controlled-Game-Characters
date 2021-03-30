@@ -4,11 +4,10 @@ import ie.gmit.sw.ai.Ghosts.Ghosts;
 
 public class Player {
 
-    private double health = 100;
+    public double health = 100;
     private double sword = 0;
     private double gun = 0;
     private int weaponDurablity = 0;
-    private int chanceOfHitting = 0;
     Ghosts g;
 
     public double getHealth() {
@@ -16,6 +15,8 @@ public class Player {
     }
 
     public void setHealth(double health) {
+        System.out.println("In health");
+        System.out.println("Health: " + getHealth());
         if (health <= 0) {
             System.out.println("You are dead :(");
             System.exit(0);
@@ -33,6 +34,7 @@ public class Player {
         if(sword == 1){
             weaponDurablity = 3;
         }
+
     }
 
     public double getGun() {
@@ -45,28 +47,30 @@ public class Player {
         if(gun == 1){
             weaponDurablity = 3;
         }
+
     }
 
-    public int getDurablity() {
+    public int getWeaponDurablity() {
         return weaponDurablity;
     }
 
-    public void setDurablity(int durablity) {
-        this.weaponDurablity = durablity;
+    public void setWeaponDurablity(int weaponDurablity) {
+        this.weaponDurablity = weaponDurablity;
     }
 
+
+
     public void Attack() {
-        System.out.println("Attacking");
+        System.out.println("Player Attacking");
         if (sword == 1) {
-            chanceOfHitting = 75;
-            weaponDurablity--;
+
             Ghosts.setDamageAmount(60);
 
             if (weaponDurablity <= 0) {
                 sword = 0;
             }
         } else if (gun == 1) {
-            chanceOfHitting = 85;
+
             weaponDurablity--;
             Ghosts.setDamageAmount(70);
 
@@ -74,14 +78,10 @@ public class Player {
                 gun = 0;
             }
         } else {
-            chanceOfHitting = 50;
+
             Ghosts.setDamageAmount(40);
         }
 
-    }
-
-
-    public void PickUp() {
     }
 
 

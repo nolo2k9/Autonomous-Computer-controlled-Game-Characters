@@ -6,6 +6,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 
+import ie.gmit.sw.ai.Ghosts.FuzzyGhost;
+import ie.gmit.sw.ai.Player.Player;
 import javafx.concurrent.Task;
 
 /*
@@ -22,7 +24,8 @@ public class GameModel {
 	private static final int MAX_CHARACTERS = 10;
 	private ThreadLocalRandom rand = ThreadLocalRandom.current();
 	private char[][] model;
-	public int ghostPosition;
+	Player p ;
+
 	
 	private final ExecutorService exec = Executors.newFixedThreadPool(MAX_CHARACTERS, e -> {
         Thread t = new Thread(e);
@@ -74,15 +77,15 @@ public class GameModel {
 	private void addGameCharacters() {
 		//Generate 10 Ghosts
 		Collection<Task<Void>> tasks = new ArrayList<>();
-		addGameCharacter(tasks, '\u0032', '0', MAX_CHARACTERS / 5); //2 is a Red Enemy, 0 is a hedge
-		addGameCharacter(tasks, '\u0033', '0', MAX_CHARACTERS / 5); //3 is a Pink Enemy, 0 is a hedge
+		addGameCharacter(tasks, '\u0032', '0', MAX_CHARACTERS / 5 , new FuzzyGhost('2' )); //2 is a Red Enemy, 0 is a hedge
+	/*	addGameCharacter(tasks, '\u0033', '0', MAX_CHARACTERS / 5); //3 is a Pink Enemy, 0 is a hedge
 		addGameCharacter(tasks, '\u0034', '0', MAX_CHARACTERS / 5); //4 is a Blue Enemy, 0 is a hedge
 		addGameCharacter(tasks, '\u0035', '0', MAX_CHARACTERS / 5); //5 is a Red Green Enemy, 0 is a hedge
-		addGameCharacter(tasks, '\u0036', '0', MAX_CHARACTERS / 5); //6 is a Orange Enemy, 0 is a hedge
+		addGameCharacter(tasks, '\u0036', '0', MAX_CHARACTERS / 5); //6 is a Orange Enemy, 0 is a hedge*/
 		tasks.forEach(exec::execute);
 	}
 	
-	private void addGameCharacter(Collection<Task<Void>> tasks, char enemyID, char replace, int number){
+	private void addGameCharacter(Collection<Task<Void>> tasks, char enemyID, char replace, int number, FuzzyGhost fuzzyGhost){
 		int counter = 0;
 		while (counter < number){
 			int row = rand.nextInt(model.length);
@@ -96,12 +99,9 @@ public class GameModel {
 				 * Command. The constructor call below is only parameterised with a lambda expression.
 				 * Fires when eny moves
 				 */
-				ghostPosition = row + col;
-				tasks.add(new CharacterTask(this, enemyID, row, col, ()-> System.out.println(enemyID + " Moving to " + row + col)));
-				if(row + col == GameWindow.playerPosition)
-				{
-					System.out.println( enemyID + "is Engaging");
-				}
+
+				tasks.add(new CharacterTask(this, enemyID, row, col, new FuzzyGhost(enemyID)));
+
 				counter++;
 			}
 		}
