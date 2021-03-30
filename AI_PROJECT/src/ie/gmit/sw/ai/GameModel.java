@@ -22,6 +22,7 @@ public class GameModel {
 	private static final int MAX_CHARACTERS = 10;
 	private ThreadLocalRandom rand = ThreadLocalRandom.current();
 	private char[][] model;
+	public int ghostPosition;
 	
 	private final ExecutorService exec = Executors.newFixedThreadPool(MAX_CHARACTERS, e -> {
         Thread t = new Thread(e);
@@ -71,6 +72,7 @@ public class GameModel {
 	}
 	
 	private void addGameCharacters() {
+		//Generate 10 Ghosts
 		Collection<Task<Void>> tasks = new ArrayList<>();
 		addGameCharacter(tasks, '\u0032', '0', MAX_CHARACTERS / 5); //2 is a Red Enemy, 0 is a hedge
 		addGameCharacter(tasks, '\u0033', '0', MAX_CHARACTERS / 5); //3 is a Pink Enemy, 0 is a hedge
@@ -91,9 +93,15 @@ public class GameModel {
 
 				/*
 				 * IMPORTANT! Change the following to parameterise your CharacterTask with an instance of
-				 * Command. The constructor call below is only parameterised with a lambda expression. 
+				 * Command. The constructor call below is only parameterised with a lambda expression.
+				 * Fires when eny moves
 				 */
-				tasks.add(new CharacterTask(this, enemyID, row, col, ()-> System.out.println("Action executing!")));
+				ghostPosition = row + col;
+				tasks.add(new CharacterTask(this, enemyID, row, col, ()-> System.out.println(enemyID + " Moving to " + row + col)));
+				if(row + col == GameWindow.playerPosition)
+				{
+					System.out.println( enemyID + "is Engaging");
+				}
 				counter++;
 			}
 		}

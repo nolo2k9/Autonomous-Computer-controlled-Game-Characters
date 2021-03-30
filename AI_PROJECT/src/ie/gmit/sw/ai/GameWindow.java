@@ -1,11 +1,14 @@
 package ie.gmit.sw.ai;
 
+import ie.gmit.sw.ai.Player.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import javax.swing.*;
 
 /*
  * Main UI for the game. You should not have to alter anything in this class.
@@ -19,6 +22,9 @@ public class GameWindow extends Application{
 	private GameModel model;
 	private int currentRow;
 	private int currentCol;
+	public static int playerPosition;
+	private Player p = new Player();
+
 
 	@Override
     public void start(Stage stage) throws Exception {
@@ -59,21 +65,27 @@ public class GameWindow extends Application{
         	if (model.isValidMove(currentRow, currentCol, currentRow + 1, currentCol, PLAYER_ID)) currentRow++;        	  	
         }else if (key == KeyCode.Z){
         	view.toggleZoom();
-        }else{
+        }else if (key == KeyCode.A){
+			p.Attack();
+		}else{
         	return;
         }
         
-        updateView();       
+        updateView();
+
+		// get the Players current Location on the map.
+		playerPosition = currentRow + currentCol;
+		System.out.println("Player is at: " + playerPosition);
     }
 	
 	private void placePlayer(){  //Place the main player character	
     	currentRow = (int) (DEFAULT_SIZE * Math.random());
     	currentCol = (int) (DEFAULT_SIZE * Math.random());
-    	model.set(currentRow, currentCol, PLAYER_ID); //Player is at index 1
+    	model.set(currentRow, currentCol, PLAYER_ID); //ie.gmit.sw.ai.Player is at index 1
     	updateView(); 		
 	}
 	
-	private void updateView(){ 
+	private void updateView(){
 		view.setCurrentRow(currentRow);
 		view.setCurrentCol(currentCol);
 	}
@@ -85,11 +97,12 @@ public class GameWindow extends Application{
 		 * the array should dynamically created from the images... 
 		 */
 		Sprite[] sprites = new Sprite[IMAGE_COUNT];
-		sprites[0] = new Sprite("Player", "/res/player-0.png", "/res/player-1.png", "/res/player-2.png", "/res/player-3.png", "/res/player-4.png", "/res/player-5.png", "/res/player-6.png", "/res/player-7.png");
+		sprites[0] = new Sprite("ie/gmit/sw/ai/Player", "/res/player-0.png", "/res/player-1.png", "/res/player-2.png", "/res/player-3.png", "/res/player-4.png", "/res/player-5.png", "/res/player-6.png", "/res/player-7.png");
 		sprites[1] = new Sprite("Red Enemy", "/res/red-0.png", "/res/red-1.png", "/res/red-2.png", "/res/red-3.png", "/res/red-4.png", "/res/red-5.png", "/res/red-6.png", "/res/red-7.png");
 		sprites[2] = new Sprite("Pink Enemy", "/res/pink-0.png", "/res/pink-1.png", "/res/pink-2.png", "/res/pink-3.png", "/res/pink-4.png", "/res/pink-5.png", "/res/pink-6.png", "/res/pink-7.png");
 		sprites[3] = new Sprite("Blue Enemy", "/res/blue-0.png", "/res/blue-1.png", "/res/blue-2.png", "/res/blue-3.png", "/res/blue-4.png", "/res/blue-5.png", "/res/blue-6.png", "/res/blue-7.png");
 		sprites[4] = new Sprite("Red Green Enemy", "/res/gred-0.png", "/res/gred-1.png", "/res/gred-2.png", "/res/gred-3.png", "/res/gred-4.png", "/res/gred-5.png", "/res/gred-6.png", "/res/gred-7.png");
-		sprites[5] = new Sprite("Orange Enemy", "/res/orange-0.png", "/res/orange-1.png", "/res/orange-2.png", "/res/orange-3.png", "/res/orange-4.png", "/res/orange-5.png", "/res/orange-6.png", "/res/orange-7.png");		return sprites;
+		sprites[5] = new Sprite("Orange Enemy", "/res/orange-0.png", "/res/orange-1.png", "/res/orange-2.png", "/res/orange-3.png", "/res/orange-4.png", "/res/orange-5.png", "/res/orange-6.png", "/res/orange-7.png");
+		return sprites;
 	}
 }

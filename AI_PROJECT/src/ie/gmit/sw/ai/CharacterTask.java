@@ -2,6 +2,7 @@ package ie.gmit.sw.ai;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import ie.gmit.sw.ai.Ghosts.Ghosts;
 import javafx.concurrent.Task;
 
 /*
@@ -39,7 +40,6 @@ public class CharacterTask extends Task<Void>{
 	private char enemyID;
 	private int row;
 	private int col;
-
 	/*
 	 * Configure each character with its own action. Use this functional interface
 	 * as a hook or template to connect to your fuzzy logic and neural network. The
@@ -68,10 +68,12 @@ public class CharacterTask extends Task<Void>{
         	Thread.sleep(SLEEP_TIME);
 
         	synchronized (model) {
+
         		//Randomly pick a direction up, down, left or right
         		int temp_row = row, temp_col = col;
         		if (rand.nextBoolean()) {
             		temp_row += rand.nextBoolean() ? 1 : -1;
+
             	}else {
             		temp_col += rand.nextBoolean() ? 1 : -1;
             	}
