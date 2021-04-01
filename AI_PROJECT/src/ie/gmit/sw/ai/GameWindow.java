@@ -75,8 +75,8 @@ public class GameWindow extends Application{
 
 		// get the Players current Location on the map.
 		playerPosition = currentRow + currentCol;
-		System.out.println("Player is at: " + playerPosition);
-		System.out.println("Player Health: " + p.getHealth());
+		//System.out.println("Player is at: " + playerPosition);
+		//System.out.println("Player Health: " + p.getHealth());
     }
 	
 	private void placePlayer(){  //Place the main player character	

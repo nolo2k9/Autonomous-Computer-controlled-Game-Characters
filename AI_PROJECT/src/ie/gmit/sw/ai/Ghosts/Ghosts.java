@@ -13,6 +13,7 @@ public abstract class Ghosts implements Command {
     private int upperbound = 101;
     private int int_random;
     protected char ghostType;
+    public static boolean isRunning = false;
 
     Player player = new Player();
 
@@ -22,40 +23,16 @@ public abstract class Ghosts implements Command {
        // Ghosts.player = player;
     }
 
-    public static double getHealth() {
-        return health;
-    }
-
-    public static void setHealth(double health) {
-        Ghosts.health = health;
-    }
-
-    public static double getEnergy() {
-        return energy;
-    }
-
-    public static void setEnergy(double energy) {
-        Ghosts.energy = energy;
-    }
-
-    public static int damageAmount;
-
-    public static int getDamageAmount() {
-        return damageAmount;
-    }
-
-    public static void setDamageAmount(int damageAmount) {
-        Ghosts.damageAmount = damageAmount;
-    }
-
-
-    public void Rejuvinate() {
-        System.out.println("Rejuvenating");
+    public void Rejuvenate() {
+        System.out.println("Rejuvenating...");
+        energy += 100;
     }
 
 
     public void Run() {
-        System.out.println("Running away..");
+        System.out.println("Running away...");
+        isRunning = true;
+        Rejuvenate();
     }
 
 
@@ -64,7 +41,7 @@ public abstract class Ghosts implements Command {
         {
             System.out.println("\n Attacking..");
 
-            player.setHealth(player.getHealth() - 10 );
+            player.setHealth(player.getHealth() - 1 );
             setEnergy(getEnergy() - 25);
             System.out.println("Player health: " + player.getHealth()
                     + ", Spider health: " + this.health + ", Spider energy: " + this.energy);
@@ -81,7 +58,7 @@ public abstract class Ghosts implements Command {
         if (int_random <= 33) {
 
             if (player.getHealth() <= 100) {
-                player.setHealth(health = 50);
+                player.setHealth(getHealth() + 50);
                 System.out.println("You have generated an extra 50 health");
             }
 
@@ -105,21 +82,40 @@ public abstract class Ghosts implements Command {
         }
 
     }
+    @Override
+    public double execute(double health, double energy) {return 0;}
 
+    public static double getHealth() {
+        return health;
+    }
 
-    public void LifeSpan() {
+    public static void setHealth(double health) {
+        Ghosts.health = health;
+    }
+
+    public static double getEnergy() {
+        return energy;
+    }
+
+    public static void setEnergy(double energy) {
+        Ghosts.energy = energy;
+    }
+
+    public char getGhostType() {
+        return ghostType;
+    }
+
+    public void setGhostType(char ghostType) {
+        this.ghostType = ghostType;
+    }
+    /*public void LifeSpan() {
         //subtracting damage amount from health variable
         health -= damageAmount;
         if (health <= 0) {
             GeneratePickup();
         }
-    }
+    }*/
 
 
-    @Override
-    public double execute(double health, double energy) {
 
-        return 0;
-
-    }
 }

@@ -78,12 +78,16 @@ public class GameModel {
 		//Generate 10 Ghosts
 		Collection<Task<Void>> tasks = new ArrayList<>();
 		addGameCharacter(tasks, '\u0032', '0', MAX_CHARACTERS / 5 , new FuzzyGhost('2' )); //2 is a Red Enemy, 0 is a hedge
-	/*	addGameCharacter(tasks, '\u0033', '0', MAX_CHARACTERS / 5); //3 is a Pink Enemy, 0 is a hedge
+		addGameCharacter(tasks, '\u0033', '0', MAX_CHARACTERS / 5, new FuzzyGhost('3' )); //3 is a Pink Enemy, 0 is a hedge
+
+		/*
 		addGameCharacter(tasks, '\u0034', '0', MAX_CHARACTERS / 5); //4 is a Blue Enemy, 0 is a hedge
 		addGameCharacter(tasks, '\u0035', '0', MAX_CHARACTERS / 5); //5 is a Red Green Enemy, 0 is a hedge
 		addGameCharacter(tasks, '\u0036', '0', MAX_CHARACTERS / 5); //6 is a Orange Enemy, 0 is a hedge*/
 		tasks.forEach(exec::execute);
+		tasks.getClass();
 	}
+
 	
 	private void addGameCharacter(Collection<Task<Void>> tasks, char enemyID, char replace, int number, FuzzyGhost fuzzyGhost){
 		int counter = 0;
@@ -106,6 +110,8 @@ public class GameModel {
 			}
 		}
 	}
+
+
 	
 	public boolean isValidMove(int fromRow, int fromCol, int toRow, int toCol, char character){
 		if (toRow <= this.size() - 1 && toCol <= this.size() - 1 && this.get(toRow, toCol) == ' '){
@@ -126,6 +132,9 @@ public class GameModel {
 	}
 	
 	public void set(int row, int col, char c){
+		this.model[row][col] = c;
+	}
+	public void sets(int row, int col, char c){
 		this.model[row][col] = c;
 	}
 	

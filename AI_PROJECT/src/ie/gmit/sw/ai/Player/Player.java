@@ -1,5 +1,6 @@
 package ie.gmit.sw.ai.Player;
 
+import ie.gmit.sw.ai.Ghosts.FuzzyGhost;
 import ie.gmit.sw.ai.Ghosts.Ghosts;
 
 public class Player {
@@ -8,7 +9,7 @@ public class Player {
     private double sword = 0;
     private double gun = 0;
     private int weaponDurablity = 0;
-    Ghosts g;
+    private double weapon = 1;
 
     public double getHealth() {
         return health;
@@ -33,6 +34,10 @@ public class Player {
         // Picking up a sword
         if(sword == 1){
             weaponDurablity = 3;
+            setWeapon(weapon+= 1);
+        }
+        else if(sword ==0){
+            setWeapon(weapon+= 0);
         }
 
     }
@@ -46,7 +51,36 @@ public class Player {
         // Picking up a sword
         if(gun == 1){
             weaponDurablity = 3;
+            setWeapon(weapon+= 1);
         }
+        else if(gun ==0){
+            setWeapon(weapon+= 0);
+        }
+
+    }
+
+    public void Attack() {
+        System.out.println("Player Attacking");
+        if (sword == 1) {
+
+            Ghosts.setHealth(Ghosts.getHealth() - 60);
+
+            if (weaponDurablity <= 0) {
+                sword = 0;
+            }
+        } else if (gun == 1) {
+
+            weaponDurablity--;
+            Ghosts.setHealth(Ghosts.getHealth() - 70);
+
+            if (weaponDurablity <= 0) {
+                gun = 0;
+            }
+        } else {
+            Ghosts.setHealth(Ghosts.getHealth() - 40);
+        }
+
+
 
     }
 
@@ -58,33 +92,11 @@ public class Player {
         this.weaponDurablity = weaponDurablity;
     }
 
-
-
-    public void Attack() {
-        System.out.println("Player Attacking");
-        if (sword == 1) {
-
-            Ghosts.setDamageAmount(60);
-
-            if (weaponDurablity <= 0) {
-                sword = 0;
-            }
-        } else if (gun == 1) {
-
-            weaponDurablity--;
-            Ghosts.setDamageAmount(70);
-
-            if (weaponDurablity <= 0) {
-                gun = 0;
-            }
-        } else {
-
-            Ghosts.setDamageAmount(40);
-        }
-
+    public double getWeapon() {
+        return weapon;
     }
 
-
-
-
+    public void setWeapon(double weapon) {
+        this.weapon = weapon;
+    }
 }
