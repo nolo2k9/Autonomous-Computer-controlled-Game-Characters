@@ -3,6 +3,7 @@ package ie.gmit.sw.ai;
 import java.util.concurrent.ThreadLocalRandom;
 
 import ie.gmit.sw.ai.Ghosts.FuzzyGhost;
+import ie.gmit.sw.ai.Ghosts.GhostAI;
 import ie.gmit.sw.ai.Ghosts.Ghosts;
 import javafx.concurrent.Task;
 
@@ -51,14 +52,19 @@ public class CharacterTask extends Task<Void> {
      * a random adjacent cell.
      */
     private Command cmd;
-    private static FuzzyGhost fg;
+   // private static FuzzyGhost fg;
+    //private static GhostAI gi;
+    private static Ghosts ghosts;
 
-    public CharacterTask(GameModel model, char enemyID, int row, int col, FuzzyGhost fg) {
+    public CharacterTask(GameModel model, char enemyID, int row, int col,Ghosts ghosts) {
         this.model = model;
         this.enemyID = enemyID;
         this.row = row;
         this.col = col;
-        CharacterTask.fg = fg;
+        //CharacterTask.fg = fg;
+       // CharacterTask.gi = gi;
+        CharacterTask.ghosts = ghosts;
+
 
     }
 
@@ -119,7 +125,8 @@ public class CharacterTask extends Task<Void> {
                      */
                     if (ghostPosition + 1 == gw.playerPosition || ghostPosition - 1 == gw.playerPosition) {
                         System.out.println(enemyID + " is Engaging ");
-                        fg.execute(Ghosts.getHealth(), Ghosts.getEnergy());
+                        ghosts.execute(Ghosts.getHealth(), Ghosts.getEnergy());
+
 
                     }
 

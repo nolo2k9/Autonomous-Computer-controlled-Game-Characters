@@ -1,5 +1,7 @@
 package ie.gmit.sw.ai;
 
+import ie.gmit.sw.ai.Ghosts.Ghosts;
+import ie.gmit.sw.ai.nn.EncogGhost;
 import javafx.application.Application;
 
 public class Runner {
@@ -29,6 +31,9 @@ public class Runner {
 		 * keys to move the player character and the 'Z' key to 
 		 * toggle the zoom in / out.
 		 */
+		//new EncogGhost().networkInit();
+		new EncogGhost().neuralNetwork();
+
 		Application.launch(GameWindow.class, args);
 	}
 }

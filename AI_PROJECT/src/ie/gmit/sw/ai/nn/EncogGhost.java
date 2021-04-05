@@ -19,14 +19,13 @@ public class EncogGhost {
 
     private static BasicNetwork basicNetwork;
 
-    BasicNetwork networkInit (){
+    public BasicNetwork networkInit(){
         //Basic neural network
         BasicNetwork network = new BasicNetwork();
         //3 layer network
         //input layer
         network.addLayer(new BasicLayer(null, true, 3));
         //hidden layer
-        network.addLayer(new BasicLayer(new ActivationSigmoid(), true, 2));
         network.addLayer(new BasicLayer(new ActivationSigmoid(), true, 2));
         //output layer
         network.addLayer(new BasicLayer(new ActivationSigmoid(), false, 3));
@@ -73,15 +72,7 @@ public class EncogGhost {
         // Encog.getInstance().shutdown();
     }
 
-    public int ghostAction(double health, double energy, double weapon){
-        double[] params = {health, energy, weapon};
-        MLData data = new BasicMLData(params);
-
-        return basicNetwork.classify(data);
-
-    }
-    //{Ghosts.getHealth(), Ghosts.getEnergy(), p.getWeapon()}};
-    private static double[][] data = { //Health, Sword, Anger
+    private static double[][] data = { //Health, Energy, Weapon
             { 2, 0, 0 }, { 2, 1, 0 }, { 2, 0, 1 }, { 2, 1, 1 }, { 2, 1, 2 }, { 2, 0, 2 },
             { 1, 0, 0 }, { 1, 1, 0 }, { 1, 0, 1 }, { 1, 1, 1 }, { 1, 1, 2 }, { 1, 0, 2 },
             { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 }, { 0, 1, 1 }, { 0, 1, 2 }, { 0, 0, 2 }};
@@ -93,6 +84,20 @@ public class EncogGhost {
             {0.0, 0.0, 1.0}, {0.0, 0.0, 1.0}, {0.0, 0.0, 1.0}, {0.0, 0.0, 1.0},
             {0.0, 0.0, 1.0}, {0.0, 0.0, 1.0}};
 
+
+
+    public double ghostAction(double health, double energy, double weapon){
+        double[] params = {health, energy, weapon};
+        MLData data = new BasicMLData(params);
+        System.out.println("Plan " + basicNetwork.classify(data));
+        return basicNetwork.classify(data);
+
+
+    }
+
+   public static void main(String[] args) {
+        new EncogGhost().networkInit();
+    }
 
 
 }

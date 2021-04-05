@@ -7,6 +7,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 
 import ie.gmit.sw.ai.Ghosts.FuzzyGhost;
+import ie.gmit.sw.ai.Ghosts.GhostAI;
+import ie.gmit.sw.ai.Ghosts.Ghosts;
 import ie.gmit.sw.ai.Player.Player;
 import javafx.concurrent.Task;
 
@@ -77,8 +79,8 @@ public class GameModel {
 	private void addGameCharacters() {
 		//Generate 10 Ghosts
 		Collection<Task<Void>> tasks = new ArrayList<>();
-		addGameCharacter(tasks, '\u0032', '0', MAX_CHARACTERS / 5 , new FuzzyGhost('2' )); //2 is a Red Enemy, 0 is a hedge
-		addGameCharacter(tasks, '\u0033', '0', MAX_CHARACTERS / 5, new FuzzyGhost('3' )); //3 is a Pink Enemy, 0 is a hedge
+		addGameCharacter(tasks, '\u0032', '0', MAX_CHARACTERS / 6, new Ghosts('2')); //2 is a Red Enemy, 0 is a hedge
+		//addGameCharacter(tasks, '\u0033', '0', MAX_CHARACTERS / 5,null, new GhostAI('3')); //3 is a Pink Enemy, 0 is a hedge
 
 		/*
 		addGameCharacter(tasks, '\u0034', '0', MAX_CHARACTERS / 5); //4 is a Blue Enemy, 0 is a hedge
@@ -89,7 +91,7 @@ public class GameModel {
 	}
 
 	
-	private void addGameCharacter(Collection<Task<Void>> tasks, char enemyID, char replace, int number, FuzzyGhost fuzzyGhost){
+	private void addGameCharacter(Collection<Task<Void>> tasks, char enemyID, char replace, int number, Ghosts ghost){
 		int counter = 0;
 		while (counter < number){
 			int row = rand.nextInt(model.length);
@@ -104,7 +106,7 @@ public class GameModel {
 				 * Fires when eny moves
 				 */
 
-				tasks.add(new CharacterTask(this, enemyID, row, col, new FuzzyGhost(enemyID)));
+				tasks.add(new CharacterTask(this, enemyID, row, col, new Ghosts(enemyID)));
 
 				counter++;
 			}

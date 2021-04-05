@@ -1,13 +1,11 @@
 package ie.gmit.sw.ai.Ghosts;
 
-import ie.gmit.sw.ai.CharacterTask;
-import ie.gmit.sw.ai.Command;
-import ie.gmit.sw.ai.GameWindow;
-import ie.gmit.sw.ai.Player.Player;
 
+import ie.gmit.sw.ai.Command;
+import ie.gmit.sw.ai.Player.Player;
 import java.util.Random;
 
-public abstract class Ghosts implements Command {
+public class Ghosts implements Command {
     private static double health = 100;
     private static double energy = 100;
     private int upperbound = 101;
@@ -15,13 +13,39 @@ public abstract class Ghosts implements Command {
     protected char ghostType;
     public static boolean isRunning = false;
 
-    Player player = new Player();
-
     public Ghosts(char ghostType) {
 
         this.ghostType = ghostType;
-       // Ghosts.player = player;
+        // Ghosts.player = player;
     }
+
+    Player player = new Player();
+    double execute = execute(getHealth(), getEnergy());
+
+    public static double getHealth() {
+        return health;
+    }
+
+    public static void setHealth(double health) {
+        Ghosts.health = health;
+    }
+
+    public static double getEnergy() {
+        return energy;
+    }
+
+    public static void setEnergy(double energy) {
+        Ghosts.energy = energy;
+    }
+
+    public char getGhostType() {
+        return ghostType;
+    }
+
+    public void setGhostType(char ghostType) {
+        this.ghostType = ghostType;
+    }
+
 
     public void Rejuvenate() {
         System.out.println("Rejuvenating...");
@@ -37,11 +61,10 @@ public abstract class Ghosts implements Command {
 
 
     public void Attack() {
-        if(this.energy > 0)
-        {
+        if (this.energy > 0) {
             System.out.println("\n Attacking..");
 
-            player.setHealth(player.getHealth() - 1 );
+            player.setHealth(player.getHealth() - 1);
             setEnergy(getEnergy() - 25);
             System.out.println("Player health: " + player.getHealth()
                     + ", Spider health: " + this.health + ", Spider energy: " + this.energy);
@@ -82,32 +105,8 @@ public abstract class Ghosts implements Command {
         }
 
     }
-    @Override
-    public double execute(double health, double energy) {return 0;}
 
-    public static double getHealth() {
-        return health;
-    }
 
-    public static void setHealth(double health) {
-        Ghosts.health = health;
-    }
-
-    public static double getEnergy() {
-        return energy;
-    }
-
-    public static void setEnergy(double energy) {
-        Ghosts.energy = energy;
-    }
-
-    public char getGhostType() {
-        return ghostType;
-    }
-
-    public void setGhostType(char ghostType) {
-        this.ghostType = ghostType;
-    }
     /*public void LifeSpan() {
         //subtracting damage amount from health variable
         health -= damageAmount;
@@ -117,5 +116,35 @@ public abstract class Ghosts implements Command {
     }*/
 
 
+    @Override
+    public double execute(double health, double energy) {
+        if (this.getClass() == FuzzyGhost.class) {
+            // Engage 1 - 100
+            if (execute > 50) {
+                System.out.println("Fuzzy Ghost attacks");
+                // Fight
+                Attack();
+            } else {
+                System.out.println("Fuzzy spider runs");
+                Run();
+            }
+        } else {
+            // Engage 1 - 2 (1 - Attack, 2 - Run)
+            if (execute == 1) {
+                System.out.println("NN spider attacks");
+                // Attack
+                Attack();
+            } else {
+                System.out.println("NN spider runs");
+                Run();
+            }
+
+
+        }
+        return execute;
+
+    }
 
 }
+
+

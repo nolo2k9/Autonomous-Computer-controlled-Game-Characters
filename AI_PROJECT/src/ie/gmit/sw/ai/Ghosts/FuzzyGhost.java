@@ -26,32 +26,8 @@ public class FuzzyGhost extends Ghosts {
         // Show output variable's chart
         Variable execute = fis.getVariable("action");
         fis.evaluate();
-        if(GameWindow.playerPosition -1 == CharacterTask.ghostPosition
-                || GameWindow.playerPosition +1 == CharacterTask.ghostPosition)
-        {
-            if (energy > 0 && health >= 20) {
-                super.Attack();
-            } else if (energy <= 0) {
-                super.Run();
-            }
-            if (health < 20) {
-                super.Run();
-            } else if (health > 20 && energy < 0) {
-                super.Attack();
-            }
-        }
-
         return execute.getValue();
 
     }
-
-
-
-
-    /*public static void main(String[] args) {
-        FuzzyGhost s = new FuzzyGhost();
-        double d = s.action(60, 14);
-        System.out.println(d);
-    }*/
 
 }
