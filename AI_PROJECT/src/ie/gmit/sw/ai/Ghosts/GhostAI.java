@@ -14,26 +14,25 @@ public class GhostAI extends Ghosts {
         EncogGhost eg = new EncogGhost();
         Player player = new Player();
 
-        if (health <= 33) {
+        if (getHealth() <= 33) {
             health = 0;
-        } else if (health <= 66) {
+        } else if (getHealth() <= 66) {
             health = 1;
         } else {
             health = 2;
         }
-        if (energy <= 33) {
+        if (getEnergy() <= 33) {
             energy = 0;
-
-        } else if (energy <= 66) {
+        } else if (getEnergy() <= 66) {
             energy = 1;
         } else {
             energy = 2;
         }
-        System.out.println(health);
-        System.out.println(energy);
+        System.out.println("Ai controller health: " + health);
+        System.out.println("Ai controller energy: " + energy);
         System.out.println(player.getWeapon());
-
-        return eg.ghostAction(health, energy, player.getWeapon());
+       // super.execute(health, energy);
+        return eg.ghostAction(getHealth(), getEnergy(), player.getWeapon());
 
     }
 

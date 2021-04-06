@@ -1,8 +1,4 @@
 package ie.gmit.sw.ai.Ghosts;
-
-
-import ie.gmit.sw.ai.CharacterTask;
-import ie.gmit.sw.ai.GameWindow;
 import net.sourceforge.jFuzzyLogic.FIS;
 import net.sourceforge.jFuzzyLogic.rule.Variable;
 

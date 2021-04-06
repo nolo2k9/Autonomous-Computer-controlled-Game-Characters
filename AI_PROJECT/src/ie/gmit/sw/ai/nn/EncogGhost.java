@@ -19,7 +19,7 @@ public class EncogGhost {
 
     private static BasicNetwork basicNetwork;
 
-    public BasicNetwork networkInit(){
+    public BasicNetwork networkInit() {
         //Basic neural network
         BasicNetwork network = new BasicNetwork();
         //3 layer network
@@ -27,8 +27,9 @@ public class EncogGhost {
         network.addLayer(new BasicLayer(null, true, 3));
         //hidden layer
         network.addLayer(new BasicLayer(new ActivationSigmoid(), true, 2));
+        //network.addLayer(new BasicLayer(new ActivationSigmoid(), true, 3));
         //output layer
-        network.addLayer(new BasicLayer(new ActivationSigmoid(), false, 3));
+        network.addLayer(new BasicLayer(new ActivationSigmoid(), false, 2));
 
         network.getStructure().finalizeStructure();
         network.reset();
@@ -65,8 +66,8 @@ public class EncogGhost {
             if (y == yd) {
                 correct++;
             }
-            System.out.println("[INFO] Output " + (yd));
-            System.out.println("[INFO] Outputs " + (y));
+           /* System.out.println("[INFO] Output " + (yd));
+            System.out.println("[INFO] Outputs " + (y));*/
         }
         System.out.println("[INFO] Testing Complete. Acc " + ((correct / total) * 100));
         // Encog.getInstance().shutdown();
@@ -77,26 +78,29 @@ public class EncogGhost {
             { 1, 0, 0 }, { 1, 1, 0 }, { 1, 0, 1 }, { 1, 1, 1 }, { 1, 1, 2 }, { 1, 0, 2 },
             { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 }, { 0, 1, 1 }, { 0, 1, 2 }, { 0, 0, 2 }};
 
-    private double[][] expected = { //Attack, Rejuvenate, Run
-            {0.0, 1.0, 0.0}, {1.0, 0.0, 0.0}, {0.0, 1.0, 1.0}, {1.0, 0.0, 0.0},
-            {1.0, 0.0, 0.0}, {0.0, 1.0, 1.0}, {0.0, 1.0, 1.0}, {1.0, 0.0, 0.0},
-            {0.0, 1.0, 1.0}, {1.0, 0.0, 0.0}, {1.0, 0.0, 0.0}, {0.0, 1.0, 1.0},
-            {0.0, 0.0, 1.0}, {0.0, 0.0, 1.0}, {0.0, 0.0, 1.0}, {0.0, 0.0, 1.0},
-            {0.0, 0.0, 1.0}, {0.0, 0.0, 1.0}};
+
+    private static double[][] expected = { //Attack , Run
+            { 1.0, 0.0 }, { 1.0, 0.0 }, { 1.0, 0.0 }, { 0.0, 1.0 }, { 0.0, 1.0 }, { 0.0, 1.0 },
+            { 1.0, 0.0 }, { 1.0, 0.0 }, { 1.0, 0.0 }, { 1.0, 0.0 }, { 0.0, 1.0 }, { 1.0, 0.0 },
+            { 1.0, 0.0 }, { 1.0, 0.0 }, { 1.0, 0.0 }, { 1.0, 0.0 }, { 1.0, 0.0 }, { 1.0, 0.0 }};
 
 
-
-    public double ghostAction(double health, double energy, double weapon){
+    public double ghostAction(double health, double energy, double weapon) {
         double[] params = {health, energy, weapon};
         MLData data = new BasicMLData(params);
-        System.out.println("Plan " + basicNetwork.classify(data));
+        System.out.println("I will " + basicNetwork.classify(data));
         return basicNetwork.classify(data);
 
 
     }
 
-   public static void main(String[] args) {
+    public static void main(String[] args) {
+        Player p = new Player();
         new EncogGhost().networkInit();
+        new EncogGhost().neuralNetwork();
+        new EncogGhost().ghostAction(Ghosts.getHealth(), Ghosts.getEnergy(), p.getWeapon());
+        System.out.println(Ghosts.getHealth());
+        System.out.println(Ghosts.getEnergy());
     }
 
 

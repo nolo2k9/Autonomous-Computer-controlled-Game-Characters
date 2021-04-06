@@ -79,8 +79,8 @@ public class GameModel {
 	private void addGameCharacters() {
 		//Generate 10 Ghosts
 		Collection<Task<Void>> tasks = new ArrayList<>();
-		addGameCharacter(tasks, '\u0032', '0', MAX_CHARACTERS / 6, new Ghosts('2')); //2 is a Red Enemy, 0 is a hedge
-		//addGameCharacter(tasks, '\u0033', '0', MAX_CHARACTERS / 5,null, new GhostAI('3')); //3 is a Pink Enemy, 0 is a hedge
+		addGameCharacter(tasks, '\u0032', '0', MAX_CHARACTERS / 6, new FuzzyGhost('2')); //2 is a Red Enemy, 0 is a hedge
+		//addGameCharacter(tasks, '\u0033', '0', MAX_CHARACTERS / 6, new FuzzyGhost('3')); //3 is a Pink Enemy, 0 is a hedge
 
 		/*
 		addGameCharacter(tasks, '\u0034', '0', MAX_CHARACTERS / 5); //4 is a Blue Enemy, 0 is a hedge
@@ -106,7 +106,7 @@ public class GameModel {
 				 * Fires when eny moves
 				 */
 
-				tasks.add(new CharacterTask(this, enemyID, row, col, new Ghosts(enemyID)));
+				tasks.add(new CharacterTask(this, enemyID, row, col, ghost));
 
 				counter++;
 			}

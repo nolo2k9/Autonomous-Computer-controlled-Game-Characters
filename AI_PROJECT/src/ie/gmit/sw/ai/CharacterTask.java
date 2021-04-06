@@ -45,6 +45,7 @@ public class CharacterTask extends Task<Void> {
     private int col;
     public static int ghostPosition;
     private boolean run = false;
+    public static boolean inPosition = false;
     /*
      * Configure each character with its own action. Use this functional interface
      * as a hook or template to connect to your fuzzy logic and neural network. The
@@ -64,6 +65,7 @@ public class CharacterTask extends Task<Void> {
         //CharacterTask.fg = fg;
        // CharacterTask.gi = gi;
         CharacterTask.ghosts = ghosts;
+
 
 
     }
@@ -92,11 +94,11 @@ public class CharacterTask extends Task<Void> {
                 }
                 if (Ghosts.isRunning == true) {
                     if (rand.nextBoolean()) {
-                        System.out.println("I AM LEGGING IT UP OR DOWN");
+                        //System.out.println("I AM LEGGING IT UP OR DOWN");
                         temp_row += rand.nextBoolean() ? 5 : -5;
 
                     } else {
-                        System.out.println("I AM LEGGING IT LEFT OR RIGHT");
+                       // System.out.println("I AM LEGGING IT LEFT OR RIGHT");
                         temp_col += rand.nextBoolean() ? 5 : -5;
                     }
                     Ghosts.isRunning = false;
@@ -124,10 +126,23 @@ public class CharacterTask extends Task<Void> {
                      * computer controls this character.
                      */
                     if (ghostPosition + 1 == gw.playerPosition || ghostPosition - 1 == gw.playerPosition) {
+
+                        inPosition = true;
                         System.out.println(enemyID + " is Engaging ");
+                        System.out.println(Ghosts.getHealth());
+                        System.out.println(Ghosts.getEnergy());
                         ghosts.execute(Ghosts.getHealth(), Ghosts.getEnergy());
-
-
+                        ghosts.executee(Ghosts.getHealth(), Ghosts.getEnergy());
+                        if(ghosts.execute(Ghosts.getHealth(), Ghosts.getEnergy())< 50){
+                            ghosts.Run();
+                        }
+                        else{
+                            ghosts.Attack();
+                        }
+                        System.out.println("Contents of execute " + ghosts.execute(Ghosts.getHealth(), Ghosts.getEnergy()));
+                    }
+                    else {
+                        inPosition = false;
                     }
 
                 }

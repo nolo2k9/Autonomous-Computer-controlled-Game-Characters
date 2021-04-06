@@ -1,11 +1,13 @@
 package ie.gmit.sw.ai.Ghosts;
 
 
+import ie.gmit.sw.ai.CharacterTask;
 import ie.gmit.sw.ai.Command;
 import ie.gmit.sw.ai.Player.Player;
+
 import java.util.Random;
 
-public class Ghosts implements Command {
+public abstract class Ghosts implements Command {
     private static double health = 100;
     private static double energy = 100;
     private int upperbound = 101;
@@ -20,7 +22,7 @@ public class Ghosts implements Command {
     }
 
     Player player = new Player();
-    double execute = execute(getHealth(), getEnergy());
+
 
     public static double getHealth() {
         return health;
@@ -52,11 +54,13 @@ public class Ghosts implements Command {
         energy += 100;
     }
 
-
     public void Run() {
         System.out.println("Running away...");
         isRunning = true;
-        Rejuvenate();
+        if (getEnergy() < 1) {
+            Rejuvenate();
+        }
+
     }
 
 
@@ -73,37 +77,38 @@ public class Ghosts implements Command {
 
     }
 
+    double execute = execute(getHealth(), getEnergy());
+    //@Override
+    public double executee(double health, double energy) {
+        System.out.println("In run");
+        if (this.getClass() == FuzzyGhost.class && CharacterTask.inPosition) {
+            // Engage 1 - 100
+            if (execute > 50) {
+                System.out.println("Fuzzy Ghost attacks");
+                System.out.println("In attack");
 
-    public void GeneratePickup() {
-        Random rand = new Random(); //instance of random class
-        //101 because the last number is excluded
-        int_random = rand.nextInt(upperbound);
-        if (int_random <= 33) {
-
-            if (player.getHealth() <= 100) {
-                player.setHealth(getHealth() + 50);
-                System.out.println("You have generated an extra 50 health");
+                // Fight
+               Attack();
+            } else if(execute < 50) {
+                System.out.println("Fuzzy Ghost runs");
+               Run();
             }
+        } else {
+            // Engage 1 - 2 (1 - Attack, 2 - Run)
+            if (execute == 1) {
+                System.out.println("NN Ghost attacks");
+                // Attack
+                Attack();
 
-        } else if (int_random > 33 && int_random <= 66) {
-
-
-            if (player.getSword() == 0) {
-                player.setSword(1);
-                System.out.println("You have picked up a sword");
-            }
-
-        } else if (int_random > 66) {
-
-            if (player.getGun() == 0) {
-                player.setGun(1);
-                System.out.println("You have picked up a gun");
             } else {
-                System.out.println("You have picked up have a gun");
+                System.out.println("NN spider runs");
+                Run();
+
             }
+
 
         }
-
+        return execute;
     }
 
 
@@ -114,36 +119,6 @@ public class Ghosts implements Command {
             GeneratePickup();
         }
     }*/
-
-
-    @Override
-    public double execute(double health, double energy) {
-        if (this.getClass() == FuzzyGhost.class) {
-            // Engage 1 - 100
-            if (execute > 50) {
-                System.out.println("Fuzzy Ghost attacks");
-                // Fight
-                Attack();
-            } else {
-                System.out.println("Fuzzy spider runs");
-                Run();
-            }
-        } else {
-            // Engage 1 - 2 (1 - Attack, 2 - Run)
-            if (execute == 1) {
-                System.out.println("NN spider attacks");
-                // Attack
-                Attack();
-            } else {
-                System.out.println("NN spider runs");
-                Run();
-            }
-
-
-        }
-        return execute;
-
-    }
 
 }
 

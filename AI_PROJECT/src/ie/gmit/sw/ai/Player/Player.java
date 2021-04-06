@@ -9,7 +9,7 @@ public class Player {
     private double sword = 0;
     private double gun = 0;
     private int weaponDurablity = 0;
-    private double weapon = 1;
+    private double weapon = 0;
 
     public double getHealth() {
         return health;

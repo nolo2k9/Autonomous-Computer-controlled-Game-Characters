@@ -31,8 +31,12 @@ public class Runner {
 		 * keys to move the player character and the 'Z' key to 
 		 * toggle the zoom in / out.
 		 */
-		//new EncogGhost().networkInit();
+		new EncogGhost().networkInit();
 		new EncogGhost().neuralNetwork();
+		//new Ghosts('2').execute(Ghosts.getHealth(), Ghosts.getEnergy());
+
+		System.out.println("Runner health: " +Ghosts.getHealth());
+		System.out.println("Runner Energy: " + Ghosts.getEnergy());
 
 		Application.launch(GameWindow.class, args);
 	}
