@@ -9,7 +9,6 @@ public class FuzzyGhost extends Ghosts {
     public FuzzyGhost(char ghostType) {
         super(ghostType);
     }
-
     @Override
     public double execute(double health, double energy) {
 

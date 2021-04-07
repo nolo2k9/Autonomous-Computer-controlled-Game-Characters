@@ -9,7 +9,7 @@ import java.util.Random;
 
 public abstract class Ghosts implements Command {
     private static double health = 100;
-    private static double energy = 100;
+    private static double energy = 20;
     private int upperbound = 101;
     private int int_random;
     protected char ghostType;
@@ -57,7 +57,7 @@ public abstract class Ghosts implements Command {
     public void Run() {
         System.out.println("Running away...");
         isRunning = true;
-        if (getEnergy() < 1) {
+        if (getEnergy() < 25) {
             Rejuvenate();
         }
 
@@ -66,7 +66,7 @@ public abstract class Ghosts implements Command {
 
     public void Attack() {
         if (this.energy > 0) {
-            System.out.println("\n Attacking..");
+            System.out.println("Attacking..");
 
             player.setHealth(player.getHealth() - 1);
             setEnergy(getEnergy() - 25);
@@ -81,7 +81,7 @@ public abstract class Ghosts implements Command {
     //@Override
     public double executee(double health, double energy) {
         System.out.println("In run");
-        if (this.getClass() == FuzzyGhost.class && CharacterTask.inPosition) {
+        /*if (this.getClass() == FuzzyGhost.class && CharacterTask.inPosition) {
             // Engage 1 - 100
             if (execute > 50) {
                 System.out.println("Fuzzy Ghost attacks");
@@ -94,20 +94,16 @@ public abstract class Ghosts implements Command {
                Run();
             }
         } else {
-            // Engage 1 - 2 (1 - Attack, 2 - Run)
-            if (execute == 1) {
-                System.out.println("NN Ghost attacks");
-                // Attack
-                Attack();
-
-            } else {
+            // Engage 1 - 2 (1 - Attack, 2 - Run)*/
+          /*  if (execute == 0) {
                 System.out.println("NN spider runs");
                 Run();
 
-            }
+            } else if(execute ==1) {
+                System.out.println("NN spider attacks");
+                Attack();
+            }*/
 
-
-        }
         return execute;
     }
 

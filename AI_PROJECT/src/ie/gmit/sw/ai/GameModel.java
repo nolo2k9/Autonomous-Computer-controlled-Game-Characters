@@ -10,6 +10,7 @@ import ie.gmit.sw.ai.Ghosts.FuzzyGhost;
 import ie.gmit.sw.ai.Ghosts.GhostAI;
 import ie.gmit.sw.ai.Ghosts.Ghosts;
 import ie.gmit.sw.ai.Player.Player;
+import ie.gmit.sw.ai.nn.EncogGhost;
 import javafx.concurrent.Task;
 
 /*
@@ -91,7 +92,7 @@ public class GameModel {
 	}
 
 	
-	private void addGameCharacter(Collection<Task<Void>> tasks, char enemyID, char replace, int number, Ghosts ghost){
+	private void addGameCharacter(Collection<Task<Void>> tasks, char enemyID, char replace, int number, Ghosts ghosts){
 		int counter = 0;
 		while (counter < number){
 			int row = rand.nextInt(model.length);
@@ -106,7 +107,7 @@ public class GameModel {
 				 * Fires when eny moves
 				 */
 
-				tasks.add(new CharacterTask(this, enemyID, row, col, ghost));
+				tasks.add(new CharacterTask(this, enemyID, row, col, ghosts));
 
 				counter++;
 			}

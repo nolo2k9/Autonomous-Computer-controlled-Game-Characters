@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import ie.gmit.sw.ai.Ghosts.FuzzyGhost;
 import ie.gmit.sw.ai.Ghosts.GhostAI;
 import ie.gmit.sw.ai.Ghosts.Ghosts;
+import ie.gmit.sw.ai.nn.EncogGhost;
 import javafx.concurrent.Task;
 
 /*
@@ -56,8 +57,9 @@ public class CharacterTask extends Task<Void> {
    // private static FuzzyGhost fg;
     //private static GhostAI gi;
     private static Ghosts ghosts;
+    private static EncogGhost ghost;
 
-    public CharacterTask(GameModel model, char enemyID, int row, int col,Ghosts ghosts) {
+    public CharacterTask(GameModel model, char enemyID, int row, int col,  Ghosts ghosts) {
         this.model = model;
         this.enemyID = enemyID;
         this.row = row;
@@ -65,6 +67,7 @@ public class CharacterTask extends Task<Void> {
         //CharacterTask.fg = fg;
        // CharacterTask.gi = gi;
         CharacterTask.ghosts = ghosts;
+
 
 
 
@@ -131,17 +134,24 @@ public class CharacterTask extends Task<Void> {
                         System.out.println(enemyID + " is Engaging ");
                         System.out.println(Ghosts.getHealth());
                         System.out.println(Ghosts.getEnergy());
-                        ghosts.execute(Ghosts.getHealth(), Ghosts.getEnergy());
+                        double help = ghosts.execute(Ghosts.getHealth(), Ghosts.getEnergy());
                         ghosts.executee(Ghosts.getHealth(), Ghosts.getEnergy());
-                        if(ghosts.execute(Ghosts.getHealth(), Ghosts.getEnergy())< 50){
+                        if(help <1){
                             ghosts.Run();
                         }
-                        else{
+                        else if(help >0
+                        && help <2){
                             ghosts.Attack();
                         }
+                        else if(help >50){
+                            ghosts.Attack();
+                        }
+                        else if(help<50 && help >1){
+                            ghosts.Run();
+                        }
                         System.out.println("Contents of execute " + ghosts.execute(Ghosts.getHealth(), Ghosts.getEnergy()));
-                    }
-                    else {
+
+                    } else {
                         inPosition = false;
                     }
 

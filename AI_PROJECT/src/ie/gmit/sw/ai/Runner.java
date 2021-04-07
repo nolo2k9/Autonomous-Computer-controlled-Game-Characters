@@ -3,9 +3,14 @@ package ie.gmit.sw.ai;
 import ie.gmit.sw.ai.Ghosts.Ghosts;
 import ie.gmit.sw.ai.nn.EncogGhost;
 import javafx.application.Application;
+import org.encog.neural.networks.BasicNetwork;
+import org.encog.util.obj.SerializeObject;
+
+import java.io.File;
+import java.io.IOException;
 
 public class Runner {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		/*
 		 * PLEASE READ CAREFULLY
 		 * ---------------------
@@ -33,11 +38,6 @@ public class Runner {
 		 */
 		new EncogGhost().networkInit();
 		new EncogGhost().neuralNetwork();
-		//new Ghosts('2').execute(Ghosts.getHealth(), Ghosts.getEnergy());
-
-		System.out.println("Runner health: " +Ghosts.getHealth());
-		System.out.println("Runner Energy: " + Ghosts.getEnergy());
-
 		Application.launch(GameWindow.class, args);
 	}
 }
