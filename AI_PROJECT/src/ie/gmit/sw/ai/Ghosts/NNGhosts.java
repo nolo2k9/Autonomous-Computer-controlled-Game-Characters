@@ -6,35 +6,15 @@ import ie.gmit.sw.ai.nn.EncogBuilder;
 
 
 public class NNGhosts extends Ghosts implements Command {
-    private static double health = 100;
-    private static double energy = 100;
     private int upperbound = 101;
-    private int int_random;
-    protected char ghostType;
     public static boolean isRunning = false;
     Player player = new Player();
-
-    public static double getHealth() {
-        return health;
-    }
-
-    public static void setHealth(double health) {
-        NNGhosts.health = health;
-    }
-
-    public static double getEnergy() {
-        return energy;
-    }
-
-    public static void setEnergy(double energy) {
-        NNGhosts.energy = energy;
-    }
 
 
 
     public void Rejuvenate() {
         System.out.println("NN Rejuvenating...");
-        energy += 100;
+        setEnergy(getEnergy() + 100);
     }
 
     public void Run() {
@@ -45,13 +25,14 @@ public class NNGhosts extends Ghosts implements Command {
         }
     }
     public void Attack() {
-        if (this.energy > 0) {
+        System.out.println("Get Energy: " + getEnergy());
+        if (getEnergy() > 0) {
             System.out.println("NN Attacking..");
 
             player.setHealth(player.getHealth() - 1);
             setEnergy(getEnergy() - 25);
             System.out.println("Player health: " + player.getHealth()
-                    + ", Spider health: " + this.health + ", Spider energy: " + this.energy);
+                    + ", Spider health: " + getHealth() + ", Spider energy: " + getEnergy());
         }
     }
     double execut = execute(getHealth(), getEnergy());
@@ -67,22 +48,22 @@ public class NNGhosts extends Ghosts implements Command {
             EncogBuilder eg = new EncogBuilder();
             Player player = new Player();
 
-            if (health <= 33) {
+            if (getHealth() <= 33) {
                 health = 0;
-            } else if (health <= 66) {
+            } else if (getHealth() <= 66) {
                 health = 1;
             } else {
                 health = 2;
             }
-            if (energy <= 33) {
+            if (getEnergy() <= 33) {
                 energy = 0;
-            } else if (energy <= 66) {
+            } else if (getEnergy() <= 66) {
                 energy = 1;
             } else {
                 energy = 2;
             }
 
-            return eg.ghostAction(energy, health, player.getWeapon());
+            return eg.ghostAction(health, energy,player.getWeapon());
 
         }
     }

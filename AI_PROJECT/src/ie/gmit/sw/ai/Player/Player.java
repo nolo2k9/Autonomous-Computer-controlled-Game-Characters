@@ -1,5 +1,7 @@
 package ie.gmit.sw.ai.Player;
 
+import ie.gmit.sw.ai.Ghosts.Ghosts;
+
 public class Player {
 
     public double health = 100;
@@ -56,7 +58,7 @@ public class Player {
 
     }
 
-   /* public void Attack() {
+   public void Attack() {
         System.out.println("Player Attacking");
         if (sword == 1) {
 
@@ -76,7 +78,7 @@ public class Player {
         } else {
             Ghosts.setHealth(Ghosts.getHealth() - 40);
         }
-    }*/
+    }
 
     public int getWeaponDurablity() {
         return weaponDurablity;
