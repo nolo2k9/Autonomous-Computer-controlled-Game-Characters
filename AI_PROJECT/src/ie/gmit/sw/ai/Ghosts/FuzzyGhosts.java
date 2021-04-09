@@ -1,26 +1,20 @@
 package ie.gmit.sw.ai.Ghosts;
 
 
-import ie.gmit.sw.ai.CharacterTask;
 import ie.gmit.sw.ai.Command;
 import ie.gmit.sw.ai.Player.Player;
 import net.sourceforge.jFuzzyLogic.FIS;
 import net.sourceforge.jFuzzyLogic.rule.Variable;
 
-import java.util.Random;
 
 public class FuzzyGhosts extends Ghosts implements Command {
     private static double health = 100;
     private static double energy = 100;
     private int upperbound = 101;
-    private int int_random;
-    protected char ghostType;
     public static boolean isRunning = false;
     Player player = new Player();
     private static final String FCL_FILE = "./fcl/action.fcl";
-    /*//public FuzzyGhosts(char ghostType) {
-        super(ghostType);
-    }*/
+
     public static double getHealth() {
         return health;
     }
@@ -37,22 +31,14 @@ public class FuzzyGhosts extends Ghosts implements Command {
         FuzzyGhosts.energy = energy;
     }
 
-    public char getGhostType() {
-        return ghostType;
-    }
-
-    public void setGhostType(char ghostType) {
-        this.ghostType = ghostType;
-    }
-
 
     public void Rejuvenate() {
-        System.out.println("Rejuvenating...");
+        System.out.println("Fuzzy Rejuvenating...");
         energy += 100;
     }
 
     public void Run() {
-        System.out.println("Running away...");
+        System.out.println("Fuzzy Running away...");
         isRunning = true;
         if (getEnergy() <= 50) {
             Rejuvenate();
@@ -61,7 +47,7 @@ public class FuzzyGhosts extends Ghosts implements Command {
     }
     public void Attack() {
         if (this.energy > 0) {
-            System.out.println("Attacking..");
+            System.out.println("Fuzzy Attacking..");
 
             player.setHealth(player.getHealth() - 1);
             setEnergy(getEnergy() - 25);

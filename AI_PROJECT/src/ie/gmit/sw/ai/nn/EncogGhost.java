@@ -2,8 +2,6 @@ package ie.gmit.sw.ai.nn;
 
 import antlr.Utils;
 
-import ie.gmit.sw.ai.Ghosts.Ghosts;
-import ie.gmit.sw.ai.Player.Player;
 import org.encog.Encog;
 import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.ml.data.MLData;
@@ -14,11 +12,6 @@ import org.encog.ml.data.basic.BasicMLDataSet;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
-import org.encog.util.obj.SerializeObject;
-import org.encog.util.simple.EncogUtility;
-
-import java.io.File;
-import java.io.IOException;
 
 public class EncogGhost {
 

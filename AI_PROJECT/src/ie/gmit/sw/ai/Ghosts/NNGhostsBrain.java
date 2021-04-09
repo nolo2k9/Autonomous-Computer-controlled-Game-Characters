@@ -3,14 +3,8 @@ package ie.gmit.sw.ai.Ghosts;
 
 import ie.gmit.sw.ai.Player.Player;
 import ie.gmit.sw.ai.nn.EncogBuilder;
-import ie.gmit.sw.ai.nn.EncogGhost;
 
 public class NNGhostsBrain extends NNGhosts{
-
-    /*public NNGhostsBrain(char ghostType) {
-        super(ghostType);
-    }*/
-
     public double execute(double energy, double health) {
         EncogBuilder eg = new EncogBuilder();
         Player player = new Player();

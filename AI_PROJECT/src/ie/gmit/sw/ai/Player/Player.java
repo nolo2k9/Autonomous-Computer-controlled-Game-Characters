@@ -1,7 +1,5 @@
 package ie.gmit.sw.ai.Player;
 
-import ie.gmit.sw.ai.Ghosts.Ghosts;
-
 public class Player {
 
     public double health = 100;

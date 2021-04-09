@@ -8,7 +8,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 
 /*
  * Main UI for the game. You should not have to alter anything in this class.
@@ -75,8 +74,6 @@ public class GameWindow extends Application{
 
 		// get the Players current Location on the map.
 		playerPosition = currentRow + currentCol;
-		//System.out.println("Player is at: " + playerPosition);
-		//System.out.println("Player Health: " + p.getHealth());
     }
 	
 	private void placePlayer(){  //Place the main player character	

@@ -45,30 +45,26 @@ public class CharacterTask extends Task<Void> {
     private char enemyID;
     private int row;
     private int col;
-    public static int ghostPosition;
     private boolean run = false;
-    public static boolean inPosition = false;
     private static FuzzyGhosts fuzzyGhosts;
     private static NNGhosts nnGhosts;
+    private static Ghosts ghosts;
+    public static int ghostPosition;
+
+
     /*
      * Configure each character with its own action. Use this functional interface
      * as a hook or template to connect to your fuzzy logic and neural network. The
      * method execute() of Command will execute when the Character cannot move to
      * a random adjacent cell.
      */
-    private Command cmd;
-    private static Ghosts ghosts;
-    private static EncogGhost ghost;
-    Collection<List> enemy = new LinkedList<>();
-
 
     public CharacterTask(GameModel model, char enemyID, int row, int col) {
         this.model = model;
         this.enemyID = enemyID;
         this.row = row;
         this.col = col;
-        //CharacterTask.fg = fg;
-       // CharacterTask.gi = gi;
+
         CharacterTask.fuzzyGhosts = new FuzzyGhosts();
         CharacterTask.nnGhosts = new NNGhosts();
         this.ghosts = ghosts;
@@ -87,15 +83,6 @@ public class CharacterTask extends Task<Void> {
                 new NNGhosts();
                 break;
         }
-
-
-
-
-
-
-
-
-
     }
 
     @Override
@@ -145,7 +132,11 @@ public class CharacterTask extends Task<Void> {
                     col = temp_col;
                     ghostPosition = col + row;
 
-                    //System.out.println(enemyID + " is moving too: " + ghostPosition);
+                    /*
+                     * This fires if a move is not valid, i.e. if someone or some thing
+                     * is in the way. Use implementations of Command to control how the
+                     * computer controls this character.
+                     */
 
                 } else {
                     if (ghostPosition + 1 == GameWindow.playerPosition || ghostPosition - 1 == GameWindow.playerPosition)
@@ -155,24 +146,17 @@ public class CharacterTask extends Task<Void> {
                             double help = fuzzyGhosts.execute(FuzzyGhosts.getHealth(), FuzzyGhosts.getEnergy());
                             fuzzyGhosts.executing(FuzzyGhosts.getHealth(), FuzzyGhosts.getEnergy());
                             System.out.println("Contents FF " + help);
-                            // fuzzyGhosts.executing(FuzzyGhosts.getHealth(), fuzzyGhosts.getEnergy());
                             if (help > 50) {
                                 fuzzyGhosts.Attack();
                             } else {
                                 fuzzyGhosts.Run();
                             }
-                            /*
-                             * This fires if a move is not valid, i.e. if someone or some thing
-                             * is in the way. Use implementations of Command to control how the
-                             * computer controls this character.
-                             */
                         }
                         else {
                             System.out.println("in character task");
                             double help = nnGhosts.execute(NNGhosts.getHealth(), NNGhosts.getEnergy());
-                            fuzzyGhosts.executing(FuzzyGhosts.getHealth(), FuzzyGhosts.getEnergy());
+                            nnGhosts.executing(FuzzyGhosts.getHealth(), FuzzyGhosts.getEnergy());
                             System.out.println("Contents NN " + help);
-                            // fuzzyGhosts.executing(FuzzyGhosts.getHealth(), fuzzyGhosts.getEnergy());
                             if (help > 0 && help < 2) {
                                 nnGhosts.Attack();
                             } else {

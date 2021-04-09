@@ -1,14 +1,9 @@
 package ie.gmit.sw.ai.Ghosts;
 
-
-import ie.gmit.sw.ai.CharacterTask;
 import ie.gmit.sw.ai.Command;
 import ie.gmit.sw.ai.Player.Player;
 import ie.gmit.sw.ai.nn.EncogBuilder;
-import net.sourceforge.jFuzzyLogic.FIS;
-import net.sourceforge.jFuzzyLogic.rule.Variable;
 
-import java.util.Random;
 
 public class NNGhosts extends Ghosts implements Command {
     private static double health = 100;
@@ -18,10 +13,6 @@ public class NNGhosts extends Ghosts implements Command {
     protected char ghostType;
     public static boolean isRunning = false;
     Player player = new Player();
-
-    /*public NNGhosts(char ghostType) {
-        super(ghostType);
-    }*/
 
     public static double getHealth() {
         return health;
@@ -39,13 +30,6 @@ public class NNGhosts extends Ghosts implements Command {
         NNGhosts.energy = energy;
     }
 
-    public char getGhostType() {
-        return ghostType;
-    }
-
-    public void setGhostType(char ghostType) {
-        this.ghostType = ghostType;
-    }
 
 
     public void Rejuvenate() {
@@ -59,7 +43,6 @@ public class NNGhosts extends Ghosts implements Command {
         if (getEnergy() <= 50) {
             Rejuvenate();
         }
-
     }
     public void Attack() {
         if (this.energy > 0) {
