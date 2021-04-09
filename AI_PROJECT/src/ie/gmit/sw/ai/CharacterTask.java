@@ -1,10 +1,11 @@
 package ie.gmit.sw.ai;
 
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-import ie.gmit.sw.ai.Ghosts.FuzzyGhost;
-import ie.gmit.sw.ai.Ghosts.GhostAI;
+import ie.gmit.sw.ai.Ghosts.FuzzyGhosts;
 import ie.gmit.sw.ai.Ghosts.Ghosts;
+import ie.gmit.sw.ai.Ghosts.NNGhosts;
 import ie.gmit.sw.ai.nn.EncogGhost;
 import javafx.concurrent.Task;
 
@@ -40,13 +41,15 @@ public class CharacterTask extends Task<Void> {
     private static ThreadLocalRandom rand = ThreadLocalRandom.current();
     private boolean alive = true;
     private GameModel model;
-    private GameWindow gw;
+    private static GameWindow gw;
     private char enemyID;
     private int row;
     private int col;
     public static int ghostPosition;
     private boolean run = false;
     public static boolean inPosition = false;
+    private static FuzzyGhosts fuzzyGhosts;
+    private static NNGhosts nnGhosts;
     /*
      * Configure each character with its own action. Use this functional interface
      * as a hook or template to connect to your fuzzy logic and neural network. The
@@ -54,19 +57,41 @@ public class CharacterTask extends Task<Void> {
      * a random adjacent cell.
      */
     private Command cmd;
-   // private static FuzzyGhost fg;
-    //private static GhostAI gi;
     private static Ghosts ghosts;
     private static EncogGhost ghost;
+    Collection<List> enemy = new LinkedList<>();
 
-    public CharacterTask(GameModel model, char enemyID, int row, int col,  Ghosts ghosts) {
+
+    public CharacterTask(GameModel model, char enemyID, int row, int col) {
         this.model = model;
         this.enemyID = enemyID;
         this.row = row;
         this.col = col;
         //CharacterTask.fg = fg;
        // CharacterTask.gi = gi;
-        CharacterTask.ghosts = ghosts;
+        CharacterTask.fuzzyGhosts = new FuzzyGhosts();
+        CharacterTask.nnGhosts = new NNGhosts();
+        this.ghosts = ghosts;
+
+        switch (enemyID){
+            case '\u0032':
+            case '\u0034':
+                System.out.println("New FL Ghost created");
+                new FuzzyGhosts();
+                break;
+
+            case '\u0033':
+            case '\u0036':
+            case '\u0035':
+                System.out.println("New NN Ghost created");
+                new NNGhosts();
+                break;
+        }
+
+
+
+
+
 
 
 
@@ -123,41 +148,45 @@ public class CharacterTask extends Task<Void> {
                     //System.out.println(enemyID + " is moving too: " + ghostPosition);
 
                 } else {
-                    /*
-                     * This fires if a move is not valid, i.e. if someone or some thing
-                     * is in the way. Use implementations of Command to control how the
-                     * computer controls this character.
-                     */
-                    if (ghostPosition + 1 == gw.playerPosition || ghostPosition - 1 == gw.playerPosition) {
+                    if (ghostPosition + 1 == GameWindow.playerPosition || ghostPosition - 1 == GameWindow.playerPosition)
+                    {
+                        if (this.enemyID == '2' || this.enemyID == '4') {
+                            System.out.println("in character task");
+                            double help = fuzzyGhosts.execute(FuzzyGhosts.getHealth(), FuzzyGhosts.getEnergy());
+                            fuzzyGhosts.executing(FuzzyGhosts.getHealth(), FuzzyGhosts.getEnergy());
+                            System.out.println("Contents FF " + help);
+                            // fuzzyGhosts.executing(FuzzyGhosts.getHealth(), fuzzyGhosts.getEnergy());
+                            if (help > 50) {
+                                fuzzyGhosts.Attack();
+                            } else {
+                                fuzzyGhosts.Run();
+                            }
+                            /*
+                             * This fires if a move is not valid, i.e. if someone or some thing
+                             * is in the way. Use implementations of Command to control how the
+                             * computer controls this character.
+                             */
+                        }
+                        else {
+                            System.out.println("in character task");
+                            double help = nnGhosts.execute(NNGhosts.getHealth(), NNGhosts.getEnergy());
+                            fuzzyGhosts.executing(FuzzyGhosts.getHealth(), FuzzyGhosts.getEnergy());
+                            System.out.println("Contents NN " + help);
+                            // fuzzyGhosts.executing(FuzzyGhosts.getHealth(), fuzzyGhosts.getEnergy());
+                            if (help > 0 && help < 2) {
+                                nnGhosts.Attack();
+                            } else {
+                                nnGhosts.Run();
+                            }
 
-                        inPosition = true;
-                        System.out.println(enemyID + " is Engaging ");
-                        System.out.println(Ghosts.getHealth());
-                        System.out.println(Ghosts.getEnergy());
-                        double help = ghosts.execute(Ghosts.getHealth(), Ghosts.getEnergy());
-                        ghosts.executee(Ghosts.getHealth(), Ghosts.getEnergy());
-                        if(help <1){
-                            ghosts.Run();
                         }
-                        else if(help >0
-                        && help <2){
-                            ghosts.Attack();
-                        }
-                        else if(help >50){
-                            ghosts.Attack();
-                        }
-                        else if(help<50 && help >1){
-                            ghosts.Run();
-                        }
-                        System.out.println("Contents of execute " + ghosts.execute(Ghosts.getHealth(), Ghosts.getEnergy()));
 
-                    } else {
-                        inPosition = false;
+
                     }
 
+                    }
                 }
             }
-        }
         return null;
     }
 }

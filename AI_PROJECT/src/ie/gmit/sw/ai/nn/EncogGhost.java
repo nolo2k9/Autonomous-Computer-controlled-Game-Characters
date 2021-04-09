@@ -48,7 +48,7 @@ public class EncogGhost {
         MLDataSet trainingSet = new BasicMLDataSet(data, expected);
         //Step 3 Create the training data set.
         ResilientPropagation train = new ResilientPropagation(basicNetwork, trainingSet);
-        double minError = 0.09; //Change and see the effect on the result... :) //make it longer to train
+        double minError = 0.06; //Change and see the effect on the result... :) //make it longer to train
         int epoch = 1;
         System.out.println("[INFO] Training.....");
         do {
@@ -79,24 +79,15 @@ public class EncogGhost {
     }
 
     private static double[][] data = { //Health, Energy, Weapon
-            {2, 2, 0}, {2, 1, 0}, {2, 0, 0} };
+            {2, 2, 0}, {2, 1, 0}, {2, 0, 0}, {1, 2, 0},
+            {1, 1, 0}, {0, 1, 0}, {2, 2, 1}, {1, 1, 1},
+            {0, 1, 1}, {0, 0, 1}, {1, 0, 1}};
 
 
-    private static double[][] expected = { //Attack , Run
-            {0.0, 1.0}, {0.0, 1.0}, {1.0, 0.0}};
-
-
-
-
-    /*public static void main(String[] args) throws IOException {
-        Player p = new Player();
-        new EncogGhost().networkInit();
-        new EncogGhost().neuralNetwork();
-        //new EncogGhost().ghostAction(Ghosts.getHealth(), Ghosts.getEnergy(), p.getWeapon());
-        System.out.println(Ghosts.getHealth());
-        System.out.println(Ghosts.getEnergy());
-    }*/
-
+    private static double[][] expected = { //Run, Attack
+            {0.0, 1.0}, {0.0, 1.0}, {1.0, 0.0}, {0.0, 1.0},
+            {0.0, 1.0}, {0.0, 1.0}, {0.0, 1.0}, {0.0, 1.0},
+            {0.0, 1.0}, {1.0, 0.0}, {1.0, 0.0}};
 
 }
 

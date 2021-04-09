@@ -66,7 +66,7 @@ public class GameWindow extends Application{
         }else if (key == KeyCode.Z){
         	view.toggleZoom();
         }else if (key == KeyCode.A){
-			p.Attack();
+			//p.Attack();
 		}else{
         	return;
         }

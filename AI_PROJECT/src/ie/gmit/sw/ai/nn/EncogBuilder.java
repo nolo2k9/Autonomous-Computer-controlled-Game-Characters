@@ -4,8 +4,8 @@ import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
 
 public class EncogBuilder extends EncogGhost {
-    public double ghostAction(double health, double energy, double weapon) {
-        double[] params = {health, energy, weapon};
+    public double ghostAction(double energy,double health, double weapon) {
+        double[] params = {energy, health, weapon};
         MLData data = new BasicMLData(params);
         System.out.println("I will " + basicNetwork.classify(data));
 
