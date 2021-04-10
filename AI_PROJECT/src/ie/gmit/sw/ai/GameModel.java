@@ -6,9 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 
-import ie.gmit.sw.ai.Ghosts.FuzzyGhosts;
 import ie.gmit.sw.ai.Ghosts.Ghosts;
-import ie.gmit.sw.ai.Ghosts.NNGhosts;
 import javafx.concurrent.Task;
 
 /*
@@ -25,6 +23,7 @@ public class GameModel {
 	private static final int MAX_CHARACTERS = 10;
 	private ThreadLocalRandom rand = ThreadLocalRandom.current();
 	private char[][] model;
+	private Ghosts ghosts;
 
 	private final ExecutorService exec = Executors.newFixedThreadPool(MAX_CHARACTERS, e -> {
 		Thread t = new Thread(e);
@@ -75,9 +74,9 @@ public class GameModel {
 
 	private void addGameCharacters() {
 		Collection<Task<Void>> tasks = new ArrayList<>();
-		//addGameCharacter(tasks, '\u0032', '0', MAX_CHARACTERS / 5); //2 is a Red Enemy, 0 is a hedge
+		addGameCharacter(tasks, '\u0032', '0', MAX_CHARACTERS / 5); //2 is a Red Enemy, 0 is a hedge
 		addGameCharacter(tasks, '\u0033', '0', MAX_CHARACTERS / 5); //3 is a Pink Enemy, 0 is a hedge
-		/*addGameCharacter(tasks, '\u0034', '0', MAX_CHARACTERS / 5); //4 is a Blue Enemy, 0 is a hedge
+		addGameCharacter(tasks, '\u0034', '0', MAX_CHARACTERS / 5); //4 is a Blue Enemy, 0 is a hedge
 		addGameCharacter(tasks, '\u0035', '0', MAX_CHARACTERS / 5); //5 is a Red Green Enemy, 0 is a hedge
 		addGameCharacter(tasks, '\u0036', '0', MAX_CHARACTERS / 5); //6 is a Orange Enemy, 0 is a hedge*/
 		tasks.forEach(exec::execute);
@@ -96,7 +95,7 @@ public class GameModel {
 				 * IMPORTANT! Change the following to parameterise your CharacterTask with an instance of
 				 * Command. The constructor call below is only parameterised with a lambda expression.
 				 */
-				tasks.add(new CharacterTask(this, enemyID, row, col));
+				tasks.add(new CharacterTask(this, enemyID, row, col, ghosts));
 
 				counter++;
 			}

@@ -42,7 +42,7 @@ public class CharacterTask extends Task<Void> {
     private boolean alive = true;
     private GameModel model;
     private static GameWindow gw;
-    private char enemyID;
+    public static char enemyID;
     private int row;
     private int col;
     private boolean run = false;
@@ -59,16 +59,16 @@ public class CharacterTask extends Task<Void> {
      * a random adjacent cell.
      */
 
-    public CharacterTask(GameModel model, char enemyID, int row, int col) {
+    public CharacterTask(GameModel model, char enemyID, int row, int col, Ghosts ghosts) {
         this.model = model;
-        this.enemyID = enemyID;
+        CharacterTask.enemyID = enemyID;
         this.row = row;
         this.col = col;
-
+        // create instances of fuzzy and nn ghosts
         CharacterTask.fuzzyGhosts = new FuzzyGhosts();
         CharacterTask.nnGhosts = new NNGhosts();
-        this.ghosts = ghosts;
-
+        
+        //Create the type baed on the enemy id
         switch (enemyID){
             case '\u0032':
             case '\u0034':
@@ -97,7 +97,8 @@ public class CharacterTask extends Task<Void> {
             Thread.sleep(SLEEP_TIME);
 
             synchronized (model) {
-
+                fuzzyGhosts.lifeSpan();
+                nnGhosts.lifeSpan();
                 //Randomly pick a direction up, down, left or right
                 int temp_row = row, temp_col = col;
 
@@ -107,16 +108,20 @@ public class CharacterTask extends Task<Void> {
                 } else {
                     temp_col += rand.nextBoolean() ? 1 : -1;
                 }
-                if (Ghosts.isRunning == true) {
+                //If Ghosts.isRunning == True
+                if (FuzzyGhosts.isRunning || NNGhosts.isRunning) {
+                    //move the enemys 5 random spots
                     if (rand.nextBoolean()) {
                         //System.out.println("I AM LEGGING IT UP OR DOWN");
-                        temp_row += rand.nextBoolean() ? 5 : -5;
+                        temp_row += rand.nextBoolean() ? 10 : -10;
 
                     } else {
                        // System.out.println("I AM LEGGING IT LEFT OR RIGHT");
-                        temp_col += rand.nextBoolean() ? 5 : -5;
+                        temp_col += rand.nextBoolean() ? 10 : -10;
                     }
-                    Ghosts.isRunning = false;
+                    FuzzyGhosts.isRunning = false;
+                    nnGhosts.isRunning = false;
+
                 }
 
                 if (model.isValidMove(row, col, temp_row, temp_col, enemyID)) {
@@ -141,31 +146,32 @@ public class CharacterTask extends Task<Void> {
                 } else {
                     if (ghostPosition + 1 == GameWindow.playerPosition || ghostPosition - 1 == GameWindow.playerPosition)
                     {
+                        //If the enemy is a fuzzy ghost
                         if (this.enemyID == '2' || this.enemyID == '4') {
-                            System.out.println("in character task");
-                            double help = fuzzyGhosts.execute(FuzzyGhosts.getHealth(), FuzzyGhosts.getEnergy());
+                            System.out.println("EnemyID " + enemyID);
+                            System.out.println("in character task Fuzzy");
+                            //Get the fuzzy value based on current health and energy of ghosts
+                            double action = fuzzyGhosts.execute(FuzzyGhosts.getHealth(), FuzzyGhosts.getEnergy());
                             fuzzyGhosts.executing(FuzzyGhosts.getHealth(), FuzzyGhosts.getEnergy());
-                            System.out.println("Contents FF " + help);
-                            if (help > 50) {
+                            System.out.println("Contents FF " + action);
+                            if (action > 50) {
                                 fuzzyGhosts.Attack();
                             } else {
                                 fuzzyGhosts.Run();
                             }
                         }
                         else {
-                            System.out.println("in character task");
-                            double help = nnGhosts.execute(NNGhosts.getHealth(), NNGhosts.getEnergy());
+                            //Get the nn ve based on current nn ghosts energy and health
+                            System.out.println("in character task NN");
+                            double action = nnGhosts.execute(NNGhosts.getHealth(), NNGhosts.getEnergy());
                             nnGhosts.executing(FuzzyGhosts.getHealth(), FuzzyGhosts.getEnergy());
-                            System.out.println("Contents NN " + help);
-                            if (help > 0 && help < 2) {
+                            System.out.println("Contents NN " + action);
+                            if (action > 0 && action < 2) {
                                 nnGhosts.Attack();
                             } else {
                                 nnGhosts.Run();
                             }
-
                         }
-
-
                     }
 
                     }

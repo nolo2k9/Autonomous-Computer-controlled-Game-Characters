@@ -36,7 +36,22 @@ public class Runner {
 		 * keys to move the player character and the 'Z' key to 
 		 * toggle the zoom in / out.
 		 */
-		new EncogGhost().networkInit();
+
+		System.out.println("****************************************************************************");
+		System.out.println("*       GMIT- Dept. Computer Science and applied Physics                   *");
+		System.out.println("*                                                                          *");
+		System.out.println("*                          GHOST BUSTER                                    *");
+		System.out.println("*  You wake up in a strange maze with no recollection of how you got there *");
+		System.out.println("*                You have one objective SURVIVE !!!!!                      *");
+		System.out.println("****************************************************************************");
+		System.out.println("***************************** CONTROLS *************************************");
+		System.out.println("*                         Press A to Attack                                *");
+		System.out.println("*                   Directional buttons to move                            *");
+		System.out.println("*                                                                          *");
+		System.out.println("****************************************************************************");
+		System.out.println("\n");
+
+		//anew EncogGhost().networkInit();
 		new EncogGhost().neuralNetwork();
 		Application.launch(GameWindow.class, args);
 	}

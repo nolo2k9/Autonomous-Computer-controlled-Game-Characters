@@ -65,7 +65,7 @@ public class GameWindow extends Application{
         }else if (key == KeyCode.Z){
         	view.toggleZoom();
         }else if (key == KeyCode.A){
-			//p.Attack();
+			p.Attack();
 		}else{
         	return;
         }
@@ -74,6 +74,7 @@ public class GameWindow extends Application{
 
 		// get the Players current Location on the map.
 		playerPosition = currentRow + currentCol;
+
     }
 	
 	private void placePlayer(){  //Place the main player character	
@@ -82,11 +83,14 @@ public class GameWindow extends Application{
     	model.set(currentRow, currentCol, PLAYER_ID); //ie.gmit.sw.ai.Player is at index 1
     	updateView(); 		
 	}
+
 	
 	private void updateView(){
 		view.setCurrentRow(currentRow);
 		view.setCurrentCol(currentCol);
 	}
+
+
 	
 	private Sprite[] getSprites() throws Exception{
 		/*

@@ -1,22 +1,35 @@
 package ie.gmit.sw.ai.nn;
 
-import antlr.Utils;
-
 import org.encog.Encog;
 import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.MLDataPair;
 import org.encog.ml.data.MLDataSet;
-import org.encog.ml.data.basic.BasicMLData;
 import org.encog.ml.data.basic.BasicMLDataSet;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
-
+/**
+ * <h1>EncogGhst</h1>
+ * The purpose of this class is to create and train the neural network.
+ * @author Keith Nolan.
+ *
+ * @version 1.0.
+ *
+ * @see EncogGhost
+ *
+ * @since JDK15.
+ *
+ */
 public class EncogGhost {
 
+    //static variable to access network
     public static BasicNetwork basicNetwork;
 
+    /**
+     *
+     * @return
+     */
     public BasicNetwork networkInit() {
         //Basic neural network
         BasicNetwork network = new BasicNetwork();
@@ -25,7 +38,6 @@ public class EncogGhost {
         network.addLayer(new BasicLayer(null, true, 3));
         //hidden layer
         network.addLayer(new BasicLayer(new ActivationSigmoid(), true, 3));
-        //network.addLayer(new BasicLayer(new ActivationSigmoid(), true, 3));
         //output layer
         network.addLayer(new BasicLayer(new ActivationSigmoid(), false, 2));
 
@@ -67,7 +79,6 @@ public class EncogGhost {
 
         }
         System.out.println("[INFO] Testing Complete. Acc " + ((correct / total) * 100));
-        //SerializeObject.save(new File("myneuralnet.txt"), basicNetwork);
         Encog.getInstance().shutdown();
     }
 
