@@ -12,16 +12,16 @@ import org.encog.ml.data.basic.BasicMLData;
  *
  * @version 1.0.
  *
- * @see EncogGhost
+ * @see NeuralNetwork
  *
  * @since JDK15.
  *
  */
-public class EncogBuilder extends EncogGhost {
+public class EncogBuilder extends NeuralNetwork {
     public double ghostAction(double health,double energy, double weapon) {
         double[] params = {health,energy,weapon};
         MLData data = new BasicMLData(params);
-        System.out.println("I have decided to " + basicNetwork.classify(data));
+        System.out.println("Based on current circumstances I have decided to " + basicNetwork.classify(data));
 
         return basicNetwork.classify(data);
     }

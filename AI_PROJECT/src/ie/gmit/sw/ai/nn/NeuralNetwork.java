@@ -16,12 +16,12 @@ import org.encog.neural.networks.training.propagation.resilient.ResilientPropaga
  *
  * @version 1.0.
  *
- * @see EncogGhost
+ * @see NeuralNetwork
  *
  * @since JDK15.
  *
  */
-public class EncogGhost {
+public class NeuralNetwork {
 
     //static variable to access network
     public static BasicNetwork basicNetwork;
@@ -34,20 +34,23 @@ public class EncogGhost {
         //Basic neural network
         BasicNetwork network = new BasicNetwork();
         //3 layer network
+
         //input layer
         network.addLayer(new BasicLayer(null, true, 3));
         //hidden layer
         network.addLayer(new BasicLayer(new ActivationSigmoid(), true, 3));
         //output layer
         network.addLayer(new BasicLayer(new ActivationSigmoid(), false, 2));
-
+        //finalise the overall structure
         network.getStructure().finalizeStructure();
+        //reset
         network.reset();
-
+        //return the built instance of the network.
         return network;
     }
 
     public void neuralNetwork() {
+        //Call the network
         basicNetwork = networkInit();
         //Step 2 Create the training data set.
         MLDataSet trainingSet = new BasicMLDataSet(data, expected);
@@ -78,16 +81,18 @@ public class EncogGhost {
             }
 
         }
+
         System.out.println("[INFO] Testing Complete. Acc " + ((correct / total) * 100));
+        //shutdown
         Encog.getInstance().shutdown();
     }
-
+    //Input data set
     private static double[][] data = { //Health, Energy, Weapon
             {2, 2, 0}, {2, 1, 0}, {2, 0, 0}, {1, 2, 0},
             {1, 1, 0}, {0, 1, 0}, {2, 2, 1}, {1, 1, 1},
             {0, 1, 1}, {0, 0, 1}, {1, 0, 1}};
 
-
+    //Output a decision
     private static double[][] expected = { //Run, Attack
             {0.0, 1.0}, {0.0, 1.0}, {1.0, 0.0}, {0.0, 1.0},
             {0.0, 1.0}, {0.0, 1.0}, {0.0, 1.0}, {0.0, 1.0},

@@ -1,12 +1,8 @@
 package ie.gmit.sw.ai;
 
-import ie.gmit.sw.ai.Ghosts.Ghosts;
-import ie.gmit.sw.ai.nn.EncogGhost;
+import ie.gmit.sw.ai.nn.NeuralNetwork;
 import javafx.application.Application;
-import org.encog.neural.networks.BasicNetwork;
-import org.encog.util.obj.SerializeObject;
 
-import java.io.File;
 import java.io.IOException;
 
 public class Runner {
@@ -52,7 +48,7 @@ public class Runner {
 		System.out.println("\n");
 
 		//anew EncogGhost().networkInit();
-		new EncogGhost().neuralNetwork();
+		new NeuralNetwork().neuralNetwork();
 		Application.launch(GameWindow.class, args);
 	}
 }

@@ -1,12 +1,10 @@
 package ie.gmit.sw.ai;
 
-import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import ie.gmit.sw.ai.Ghosts.FuzzyGhosts;
 import ie.gmit.sw.ai.Ghosts.Ghosts;
 import ie.gmit.sw.ai.Ghosts.NNGhosts;
-import ie.gmit.sw.ai.nn.EncogGhost;
 import javafx.concurrent.Task;
 
 /*
@@ -77,8 +75,8 @@ public class CharacterTask extends Task<Void> {
                 break;
 
             case '\u0033':
-            case '\u0036':
             case '\u0035':
+            case '\u0036':
                 System.out.println("New NN Ghost created");
                 new NNGhosts();
                 break;
@@ -110,14 +108,14 @@ public class CharacterTask extends Task<Void> {
                 }
                 //If Ghosts.isRunning == True
                 if (FuzzyGhosts.isRunning || NNGhosts.isRunning) {
-                    //move the enemys 5 random spots
+                    //move the enemys 20 random spots
                     if (rand.nextBoolean()) {
                         //System.out.println("I AM LEGGING IT UP OR DOWN");
-                        temp_row += rand.nextBoolean() ? 10 : -10;
+                        temp_row += rand.nextBoolean() ? 20 : -20;
 
                     } else {
                        // System.out.println("I AM LEGGING IT LEFT OR RIGHT");
-                        temp_col += rand.nextBoolean() ? 10 : -10;
+                        temp_col += rand.nextBoolean() ? 20 : -20;
                     }
                     FuzzyGhosts.isRunning = false;
                     nnGhosts.isRunning = false;

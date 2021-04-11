@@ -46,12 +46,13 @@ public class FuzzyGhosts extends Ghosts implements Command {
      */
     public void Rejuvenate() {
         System.out.println("Fuzzy Rejuvenating...");
-        setEnergy(getEnergy() + 100);
+        setEnergy(getEnergy() + 50);
     }
     /**
      * Run()
      * <p>
      * Run away and replenish enrgy if the fuzzy value is below 50
+     * @see ie.gmit.sw.ai.CharacterTask
      * </p>
      */
     public void Run() {
@@ -73,6 +74,7 @@ public class FuzzyGhosts extends Ghosts implements Command {
      */
     public void Attack() {
         if (getEnergy() > 0 && !isDead) {
+            isRunning = false;
             System.out.println("Fuzzy Attacking..");
 
             player.setHealth(player.getHealth() - 10);
@@ -125,6 +127,7 @@ public class FuzzyGhosts extends Ghosts implements Command {
         // Show output variable's chart
         Variable execute = fis.getVariable("action");
         fis.evaluate();
+
         return execute.getValue();
 
     }
@@ -139,7 +142,7 @@ public class FuzzyGhosts extends Ghosts implements Command {
      */
     public static void lifeSpan() {
         //subtracting damage amount from health variable
-        if (FuzzyGhosts.getHealth() == 0 && count < 1) {
+        if (FuzzyGhosts.getHealth() <= 0 && count < 1) {
             isDead = true;
             GeneratePickup();
             count++;

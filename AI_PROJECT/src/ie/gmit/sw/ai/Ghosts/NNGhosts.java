@@ -40,13 +40,14 @@ public class NNGhosts extends Ghosts implements Command {
      */
     public void Rejuvenate() {
         System.out.println("NN Ghost Rejuvenating...");
-        setEnergy(getEnergy() + 100);
+        setEnergy(getEnergy() + 50);
     }
 
     /**
      * Run()
      * <p>
      * Run away and replenish enrgy if the fuzzy value is below 50
+     * @see ie.gmit.sw.ai.CharacterTask
      * </p>
      */
     public void Run() {
@@ -69,6 +70,7 @@ public class NNGhosts extends Ghosts implements Command {
      */
     public void Attack() {
         if (getEnergy() > 0 && !isDead) {
+            isRunning = false;
             System.out.println("NN Ghost Attacking..");
 
             player.setHealth(player.getHealth() - 10);
@@ -144,7 +146,7 @@ public class NNGhosts extends Ghosts implements Command {
      */
     public static void lifeSpan() {
         //subtracting damage amount from health variable
-        if (getHealth() == 0 && count < 1) {
+        if (getHealth() <= 0 && count < 1) {
             isDead = true;
             GeneratePickup();
             count++;

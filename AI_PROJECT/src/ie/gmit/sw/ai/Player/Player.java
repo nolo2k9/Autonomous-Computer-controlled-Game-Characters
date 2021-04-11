@@ -2,10 +2,8 @@ package ie.gmit.sw.ai.Player;
 
 import ie.gmit.sw.ai.CharacterTask;
 import ie.gmit.sw.ai.GameWindow;
-import ie.gmit.sw.ai.Ghosts.FuzzyGhosts;
 import ie.gmit.sw.ai.Ghosts.Ghosts;
 import ie.gmit.sw.ai.Ghosts.NNGhosts;
-import ie.gmit.sw.ai.nn.EncogGhost;
 
 import static ie.gmit.sw.ai.CharacterTask.*;
 
